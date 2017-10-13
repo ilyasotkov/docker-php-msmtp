@@ -1,0 +1,22 @@
+version: "3.3"
+
+secrets:
+  gmail_password:
+    file: ./gmail_password
+
+configs:
+  msmtprc:
+    file: ./msmtprc
+  send.php:
+    file: ./send.php
+
+services:
+  mailer:
+    image: ilyasotkov/php-msmtp:7-fpm-alpine
+    secrets:
+      - gmail_password
+    configs:
+      - source: msmtprc
+        target: /etc/msmtprc
+      - source: send.php
+        target: /send.php
